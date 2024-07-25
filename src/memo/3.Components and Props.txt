@@ -1,0 +1,94 @@
+1. Prop 란?
+    - property
+    - Component의 속성
+    - 컴포넌트에 전달할 다양한 정보를 담고 있는 자바스크립트 객체
+
+2. Props의 특징
+    - Read-Only : 값을 변경 할 수 없다.
+    - 다른 Props의 값으로 Elementes를 생성하려면?
+        새로운 값을 Component에 전달하여 새로운 Elementes를 생성하면 됨.
+    - 모든 리액트 컴포넌트는 그들의 Props에 관해서는 Pure 함수 같은 역할을 해야 한다.
+      == 모든 리액트 컴포넌트는 Props를 직접 바꿀수 없고, 같은 Props에 대해서는 항상 같은 결과를 보여줄것!
+
+3. Props의 사용법
+    - ex) [JSX]
+        function App(Props) {
+            return(
+                <Profile
+                    name="이름"
+                    introduction="안녕하세요. 이름입니다."
+                    viewCount={1500}
+                />
+            );
+        }
+        ※ Props에 값을 넣을때 문자열 이외에 정수,변수 다른 컴포넌트가 들어갈 경우 중괄호로 감싸줘야함.
+           (중괄호에 감싼 부분은 javascrip 코드가 들어간다)
+
+4. Component 만들기
+    - Component는 크게 Class Component와 Function Component로 나뉜다.
+      (Function Component를 주소 사용함)
+
+    4-1. Function Component
+        - 컴포넌트를 함수로 생각하겠다는 의미
+        - ex)
+            fucntion Welcome(props) {
+                return <h1>안년, {props.name}</h1>
+            }
+        - 간단한 코드가 장점
+
+    4-2. Class Component
+        - ex)
+            class Welcome Extends React.Component {
+                render() {
+                    return <h1>안년, {this.props.name}</h1>;
+                }
+            }
+        - React의 모든 Component는 React.Component 를 상속받아 만든다
+    
+    4-3. Component 이름 짖는 방법
+        - 항상 대문자로 시작해야 한다!
+          (※ React는 소문자로 시작하는 Component를 DOM태그로 인식하기 때문)
+
+5. Component 렌더링
+    - 렌더링을 위해 가장먼저 Component로 부터 Elementes를 만들어야함
+    - ex)
+        function Welcome(props) {
+            return <h1>안녕, {props.name}</h1>;
+        }
+
+        const element = <Welcome name="인제" />
+        ReactDOM.render(
+            element;
+            document.getElementById('root');
+        );
+        
+6. Component 합성
+    - Component 안에 또 다른 Component를 사용 할 수 있음
+    - 복잡한 화면을 여러개의 Component로 나눠서 구현 가능
+    - ex)
+        function Welcome(props) {
+            return <h1>안녕, {props.name}</h1>;
+        }
+
+        function App(props) {
+            return (
+                <div>
+                    <Welcom name="Mike" />
+                    <Welcom name="Steve" />
+                    <Welcom name="Jane" />
+                </div>
+            );
+        }
+
+        ReactDOM.render(
+            <App />
+            document.getElementById('root')
+        );
+
+7. Component 추출
+    - 큰 Component를 산산조각 낸다.
+    - 재사용성 Up, 이와 동시에 개발 속도 Up
+    - Component를 어느정도 수준가지 추출하게 좋인지에 대한 내용은 정해진게 없다.
+      하지만 기능단위로 추출하는 것이 좋고, 나중에 곧바로 재사용이 가능한 형태로 추출하는 것이 좋다.
+    - 재사용이 가능한 Component를 많이 가지고 있을수록 개발속도가 더욱더 빨라질 수 있다.
+

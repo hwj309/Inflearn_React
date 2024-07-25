@@ -3,11 +3,32 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Library from './chapter_03/Library';
+import Clock from './chapter_04/Clock';
+import CommentList from './chapter_05/CommentList';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// [ chapter_03 ]
+// root.render(
+//   <React.StrictMode>
+//     {/* <App /> */}
+//     <Library />
+//   </React.StrictMode>
+// );
+
+// [ chapter_04 ] 현재 시간 실시간 표시
+// setInterval(() => {
+//   root.render(
+//     <React.StrictMode>
+//       <Clock />
+//     </React.StrictMode>
+//   );
+// }, 1000)
+
+// [ chapter_05 ]
 root.render(
   <React.StrictMode>
-    <App />
+    <CommentList />
   </React.StrictMode>
 );
 
