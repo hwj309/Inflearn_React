@@ -1,0 +1,30 @@
+[State(상태)]
+
+1. React에서 State란?
+    - Component의 변겅 가능한 데이터
+    - 개발자가 정의함
+    - ★ 렌더일이나 데이터 흐름에 사용되는 값만 state에 포함시켜야 함 (이렇지 않은경우 Component필드에 인스턴스로 정의하면됨)
+      (이유 : state가 변경될 경우 state기 제렌더링되기 때문에 렌더링과 데이터 흐름에 관련없는 값을 포함하면 
+              불필요한 경우의 컴포넌트가 다리 렌더링되어 성능을 저하시킬 수 있기 때문)
+    - JavaScript 객체이다
+    - state가 정의된 이후 직접 수정 할 수 없다
+      (★엄밀히 따지면 수정은 가능하지만 하.면.안.된.다!★)
+      (마음대로 수정하면 개발자가 의도한 값데로 작동하지 않을 가능성이 있음)
+      (Class Component에서 state를 변경하고자 한다면 꼭 setState라는 함수를 사용해야한다)
+
+
+
+[Lifecycle(생명주기)]
+Component가 살아있는 주기가 있다는 이야기가 된다.
+Component가 계속 존재하는 것이 아니라, 시간의 흐름에 따라 생성되고 업데이트 되다가 사라진다.
+
+1. Lifecycle 생면주기
+    - Mounting(출생) => Updating(인생) => Unmounting(사망)
+        - Mounting : Component가 생성될때
+        - Updating : Component가 수정될때
+        - Unmounting : Component가 더이상 화면에 표시되지 않을때
+
+    (※ 최근 Class Component를 거의 사용하지 않기 때문에 나머지 생명주기는 생략)
+
+
+

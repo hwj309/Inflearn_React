@@ -16,6 +16,7 @@ function CommentList(props) {
     return (
 
         <div>
+            <h1>React 댓글달기</h1>
             <span>이름 : </span>
             <input id="name" ref={nameRef} onChange={(e) => {nameRef.current = e.target.value}}></input>
             <span>내용 : </span>
