@@ -1,0 +1,168 @@
+[Hook]
+
+React 16.8에서 새롭게 나온 기능
+
+0. Hook 등장배경
+    React Component는 함수형 컴포넌트(Functional Component)와 클래스형 컴포넌트(Class Component)로 나뉜다.
+    React 초기에는 일반적으로 함수형 컴포넌트(Functional Component)를 사용하였으나, 값의 상태를 관리(state) 혹은 Lice Cycle Method(생명 주기=컴포넌트가 생성되고 사라지는 과정이 존재 할 때)를 사용하여야 할 때에만 클래스형 컴포넌트(Class Component)를 사용하였다.
+
+    함수형 컴포넌트(Functional Component)가 사용된 이유는 아래와 같은 클래스형 컴포넌트(Class Component)의 대표적인 단점때문이였다.
+
+    1) 코드의 구성이 어렵고 Component의 재사용성이 떨어진다.
+    2) 컴파일 단계에서 코드 최적화를 어렵게 한다.
+    3) 최신 기술의 적용이 효과적이지 않다.
+    
+    이러한 클래스형 컴포넌트(Class Component)의 단점을 보안하여, 함수형 컴포넌트(Functional Component)를 사용 할 수 있도록 등장한 것이 바로 React Hook(리액트 훅)이다.
+
+1. Hook 이란?
+    - React Hook 이란, 리액트 v16.8에 새로 도입된 기능으로, 함수형 컴포넌트(Functional Component)에서 사용되는 몇가지 기술들을 일컫는다. 리액트 훅은 함수형 컴포넌트(Functional Component)가 클래스형 컴포넌트(Class Component)의기능을 사용 할 수 있도록 해주며 대표적인 예로는 useState, useEffect 등이 존재한다.
+
+2. Hook의 규칙
+    - 리액트 Hook은 반복문, 조건문 혹은 중첩된 함수 내에서 호출하면 안되며 반드시 최상위(at the Top Level)에서만 Hook을 호출해야 한다. 또한 Hook은 렌더링 시 항상 동일한 순서로 호출 되어야 한다.
+    - Hook은 React 함수 내에서만 호출 해야 한다. 즉, 리액트 Hook은 함수형 컴포넌트(Functional Component) 에서 호출해야 하며, 추가적으로 custom hooks에서 또한 호출이 가능하다.
+
+3. 대표적인 Hook
+    1) useState
+        - state를 사용하기 위한 Hook
+        - 사용법
+          ex) const [변수명, set함수명] = useState(초기값);
+          <주의 : 변수 각각에 대한 set함수가 따로 존재!>
+    
+    2) useEffect
+        - Side efferct를 수행하기 위한 Hook
+            - Side effect = 효과, 영향
+            - effect라 불리는 이유 : 다른 컴포넌트에 여향을 미칠 수 있으며, 렌더링 중에는 작업이 완료될 수 없기 때문
+            - ※ 리액트의 함수 컴포넌트에서 Side effect를 실행할 수 있게 해주는 Hook
+            - 사용법
+              ex) useEffect(이펙트 함수, 의존성 배열);
+              <※ 의존성 배열에 담긴 값이 하나라도 변경 된 경우 effect 함수가 실행됨>
+              <※ 처음 컴포넌트가 렌더링된 이후와 업데이트로 인핸 재렌더링 이후에 실행됨>
+
+            - Effect 함수를 mount, unmount 시에 단 한번씩만 실행되게 하고자 하는 경우 아래와 같이 작성
+              ex) useEffect(이펙트 함수, []);
+              <※ 이경우 해당 effect가 props,state에 있는 어떤 값에도 의존하지 않기 때문에 여러번 실행되지 않음>
+              
+            - 의존성 배열을 생략하면 컴포넌트가 업데이트될 때마다 호출 됨
+              ex) useEffect(이펙트 함수);
+
+            - useEffect 내부에 return 함수는 컴포넌트가 unmount 될때 호출되는 componentWillUnmount 함수가 하는 역학과 동일함.
+        
+        - 한눈에 정리
+            useEffect(() => {
+                // 컴포넌트가 마운트 된 이수,
+                // 의존성 배열에 있는 변수들 중 하나라도 값이 변경되었을 때 실행됨
+                // 의존성 밸에 빈 배여러([])을 넣으면 마운트와 언마운트시에 단 한 번씩만 실행됨
+                // 의존성 배열 생략 시 컴포넌트 엡데이트 시마다 실행됨
+                ...
+
+                return () => {
+                    // 컴포넌트가 마운트 해제되기 전에 실행됨
+                    ...
+                }
+            }, [의존성 변수1, 의존성 변수2, ...]);
+
+    3) useMemo
+        - Memoized value를 리턴하는 Hook
+        - Memoization
+            - 연산량이 많은 함수의 호출 결과를 저장해 두었다가 같은 함수를 호출하면 새로 함수를 호출 하지 않고 이전에 저장해두었던 결과를 반환해주는 기능
+            - 함수의 호출 시간도 빨라지고, 불필요한 중복 연산도 하지 않기 때문에 컴퓨터의 자원을 적게쓸수 있음
+        - 사용법
+            ex) 의존성 배열에 들어있는 변수가 변했을 경우에만 실행되고 그렇지 않을 경우 기존에 저장된 값을 그대로 반환
+                const memoization = useMemo(
+                    () => {
+                        // 연산량이 높은 작업을 수행하여 결과를 반환
+                        return computeExpensiveValue(의존성 변수1, 의존성 변수2);
+                    },
+                    [의존성 변수1, 의존성 변수2]
+                );
+        - 기억
+            - useMemo로 전달된 함수는 렌더링이 '일어나는 동안' 실행된다.
+            - 따라서 렌더링이 '일어나는 동안' 실행되서는 안될 작업을 useMemo 함수에 넣으면 안된다.
+            - 예를 들어 useEffect 문에서 실행되어야할 Side Effect같은 것이 있다.
+            - ★ 서버에서 데이터를 받아오거나 수동으로 DOM을 변경하는 작업 등을 렌더링이 이루어지는 동안 실행되서는 안되기때문에 useMemo함수 가 아닌 useEffect함수를 이용해야 한다. ★
+            - 의존성 배열을 넣지 않은 경우, 매 렌더링마다 함수가 실행 됨
+                ex)
+                    const memoizedValue = useMemo(
+                        () => {
+                            return computeExpensiveValue(a,b)
+                        }
+                    );
+            - 따라서 useMemo 함수에 의존성 함수를 넣지 않는다는 것은 아무런 의미가 없다.
+            - 의존성 배열에 빈 배열이 들어가면 컴포넌트 마운트 시에만 호출 됨
+                ex)
+                    const memoizedValue = useMemo(
+                        () => {
+                            return computeExpensiveValue(a,b)
+                        },
+                        []
+                    );
+
+    4) useCallback
+        - useMemo() Hook과 유사하지만 값이 아닌 함수 자체를 저장했다가 반환
+        - 사용법
+            ex)
+                const memoizedCallback = useCallback(
+                    () => {
+                        doSomething(의존성 변수1, 의존성 변수2);
+                    },
+                    [의존성 변수1, 의존성 변수2]
+                )
+        - 다음 두 줄의 코드는 모두 같은 의미가
+            ex)
+                useCallback(함수, 의존성 배열);
+                useMemo(() => 함수, 의존성 배열);
+
+    5) useRef
+        - Reference를 사용하기 위한 Hook
+        - Reference란?
+            특정 컴포넌트에 접근할 수 있는 객체
+        - 사용법
+            const refContainer = useRef(초깃값);
+
+            <div ref={myRef} />
+        - class 의 인스턴스 필드를 사용하는 것과 유사하게 다양한 변수를 저장 할 수 있다는 장점이 있음.
+          왜냐하면 useRef() Hook 이 일반적인 javaScript 객체를 리턴하기 때문
+        - 기억
+            useRef() Hook은 내부의 데이터가 변경되었을때 별도로 알리지 않는다.
+            따라서 커런트 속성을 변경한다고 해서 재렌더링이 일어나지는 않음.
+            따라서 Ref에 DOM 노드가 연결되거나 분리되었을경우 어떠한 코드를 실행하고싶은 경우 Callback ref를 사용해야함
+
+        - Callback ref 사용법
+            ex)
+                function MeasureExample(props) {
+                    const [height, setHeight] = useState(0);
+
+                    const measuredRef = useCallback(node => {   //요기~~~~~~
+                        if (node !== null) {
+                            setHeight(node.getBoundingClientRect().height);
+                        }
+                    }, []);
+
+                    return (
+                        <>
+                            <h1 ref={measuredRef}>안녕, 리액트</h1>
+                            <h2>위 헤더의 높이는 {Math.round(height)}px 입니다.</h2>
+                        </>
+                    )
+                }
+
+
+4. Hook의 규칙
+    - 무조건 최상위 레벨에서만 호출해야 한다.
+    - 컴포넌트가 렌더링될 때마다 매번 같은 순서로 호출되어야 한다.
+    - 리액트 함수 컴포넌트에서만 호출하여야 한다.
+
+    - <Hook의 규칙과 관련해서 개발에 도움이 되는 패키지 : eslint-plugin-react-hooks>
+       - Hook의 규칙을 다르도록 강제해 주는 플러그인
+       - javaScript에서 발생하는 문제패턴을 식별하기 윈한 정적 코드분석 도구
+       - https://www.npmjs.com/package/eslint-plugin-react-hooks 참고
+
+5. Custom Hook 만들기
+    - 여러 컴포넌트에서 반복적으로 사용되는 로직을 Hook으로 만들어 재사용 하기위해 사용됨
+    - 이름이 use로 시작하고 내부에서 다른 Hook을 호출하는 하나의 자바스크립트 함수
+    - 규칙은 개발자가 정할 수 있다
+    - 여러 개의 컴포넌트에서 하나의 Custom Hook을 사용할 때 컴포넌트 내부에 있는 모든 state와 effects는 전부 분리되어 있다.
+    - 각 Custom Hook 호출에 대해서 분리된 state를 얻게 됨
+    - 각 Custom Hook의 호출 도한 완전히 독립적이다.
+
+

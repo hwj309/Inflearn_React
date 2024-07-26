@@ -48,6 +48,7 @@ class NotificationList extends React.Component {
     render() {
         return (
             <div>
+                <h1>Console Log 확인하기</h1>
                 {this.state.notification.map((notification) => {
                     return <Notification key={notification.id} id={notification.id} message={notification.message} />;
                 })}
