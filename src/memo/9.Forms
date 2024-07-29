@@ -1,0 +1,19 @@
+[Forms]
+
+- 상용자로 부터 입력을 받기위해 사용
+
+- Controlled Components
+    - 값이 리액트의 통제를 받는 Input Form Element
+    - 사용자의 입력을 직접적으로 제어할 수 있음
+
+- Multiple Inputs
+    - 여러개의 state를 선언하여 각각의 입력에 대해 사용!
+
+- input 에 value가 지정되어 있을 경우 변경 할 수 없다.
+  만약 이를 변경하고 싶을 경우에는 value에 null을 넣으면 된다.
+    - ex)
+        ReactDOM.render(<input value="hi" />, rootNode);
+
+        setTimeout(function() {
+            ReactDOM.render(<input value={null} />, rootNode);
+        }, 1000);
