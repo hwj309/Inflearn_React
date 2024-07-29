@@ -12,6 +12,7 @@ import ConfirmButtonBind from './chapter_08/ConfirmButtonBind';
 import ConfirmButtonClassFieldsSyntax from './chapter_08/ConfirmButtonClassFieldsSyntax';
 import ConfirmButtonFunction from './chapter_08/ConfirmButtonFunction';
 import LandingPage from './chapter_09/LandingPage';
+import AttendanceBook from './chapter_10/AttendanceBook';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // [ chapter_03 ]
@@ -67,9 +68,16 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // );
 
 // [ chapter_09 ]
+// root.render(
+//   <React.StrictMode>
+//     <LandingPage /> 
+//   </React.StrictMode>
+// );
+
+// [ chapter_10 ]
 root.render(
   <React.StrictMode>
-    <LandingPage /> 
+    <AttendanceBook /> 
   </React.StrictMode>
 );
 
