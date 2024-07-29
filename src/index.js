@@ -11,6 +11,7 @@ import Accommodate from './chapter_07/Accommodate';
 import ConfirmButtonBind from './chapter_08/ConfirmButtonBind';
 import ConfirmButtonClassFieldsSyntax from './chapter_08/ConfirmButtonClassFieldsSyntax';
 import ConfirmButtonFunction from './chapter_08/ConfirmButtonFunction';
+import LandingPage from './chapter_09/LandingPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // [ chapter_03 ]
@@ -52,16 +53,23 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // );
 
 // [ chapter_08 ]
+// root.render(
+//   <React.StrictMode>
+//     바인드 방법
+//     <ConfirmButtonBind /> 
+//     <hr />
+//     Class field syntax 방법
+//     <ConfirmButtonClassFieldsSyntax />
+//     <hr /> 
+//     함수 컴포넌트 방법
+//     <ConfirmButtonFunction /> 
+//   </React.StrictMode>
+// );
+
+// [ chapter_09 ]
 root.render(
   <React.StrictMode>
-    바인드 방법
-    <ConfirmButtonBind /> 
-    <hr />
-    Class field syntax 방법
-    <ConfirmButtonClassFieldsSyntax />
-    <hr /> 
-    함수 컴포넌트 방법
-    <ConfirmButtonFunction /> 
+    <LandingPage /> 
   </React.StrictMode>
 );
 

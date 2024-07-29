@@ -1,0 +1,69 @@
+[Conditional Rendering (조건부 렌더링)]
+
+- 의미 : 어떠한 조건에 따라서 렌더링이 달라지는 것
+    - ex) true 이변 보여주고, false 이면 가려주는 기능
+
+- javaScript에서 사용하는 용어에 대해 짚고 넘어가자
+    - Truthy : true는 아니지만 true로 여겨지는 값
+        - ex)
+            true            
+            {}              (empty object)
+            []              (empty array)
+            42              (number, not zero)
+            "0", "false"    (string, not empty)
+    - Falsy : false는 아니지만 false로 여겨지는 값
+        - ex)
+            false
+            0, -0           (zero, minus zero)
+            0n              (BigInt zero)
+            '', "", ``      (empty string)
+            null
+            undefined
+            NaN             (not a number)
+
+
+- Element Variables
+    - 렌더링 해야할 컴포넌트를 변수처러 다루고 싶은 경우 사용하는 방법
+    
+- Inline Conditions
+    - 조건문을 코드 안에 집어넣는 것
+
+    - Inline if : if문을 필요한 곳에 직접 입력하여 사용하는 방법 (단. If문의 경우 && 연산자를 사용)
+        - ex) && 패턴은 굉장히 많이 사용하는 패턴이기때문에 꼭 기억하자!!!!!
+            function Mailbox(props) {
+                const unreadMessages = props.unreadMessages;
+
+                return (
+                    <div>
+                        <h1>안녕하세요!</h1>
+                        {unreadMessages.length > 0 &&
+                            <h2>
+                                현제 {unreadMessages.length}개의 읽지 않은 메시지가 있습니다.
+                            </h2>
+                        }
+                    </div>
+                );
+            }
+
+    - Inline If-Else : If-Else문은 필요한 곳에 직접 입력하여 사용하는 방법 (If-Else문의 경우 ? 연산자를 사용)
+        - ex) 
+            function UserStatus(props) {
+                return (
+                    <div>
+                        이 사용자는 현재 <b>{props.isLoggedIn ? '로그인' : '로그인하지 않은'}</b> 상태입니다.
+                    </div>
+                )
+            }
+            
+- Component 렌더링 막기
+    - null을 리텅하면 렌더링되지 않음
+    - ex)
+        function WarningBanner(props) {
+            if (!props.warning) {
+                return null;
+            }
+
+            return (
+                <div>경고!</div>
+            );
+        }
