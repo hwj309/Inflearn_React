@@ -1,0 +1,93 @@
+[Event(사건)]
+
+- DOM에서 처리하는 Event는 이벤트를 문자로 전달하지만
+  React에서는 함수 그대로 전달한다.
+ex)
+    <button onClick={activate}>
+        Activate
+    </button>
+
+- 기억하면 좋은 개념
+    - 카멜케이스(camelCase) : 낙타 등의 혹을 보고 나온 개념이다.
+                           첫글자는 소문자로 시작하되 중간에 나오는 새로운 단어의 첫글자를 대문자로 표기하는 방법.
+                           (ex> onClick)
+
+- Event Handler(= Event Listener) : 어떤 사건이 발생하면, 사건을 처리하는 역할
+    - ex) 클래스 컴포넌트에서의 방법
+        class Toggle extends React.Component {
+            constructor(props) {
+                super(props);
+
+                this.state = {isToggleOn: true};
+
+                // callback에서 'this'를 이용하기 위해서는 바인딩을 필수로 해줘야 함.
+                this.handleClick = this.handleClick.bind(this);
+            }
+
+            handleClick() {
+                this.setState(prevState => ({
+                    isToggleOn = !.prevState.isToggleOn
+                }));
+            }
+
+            // 바인디 하지 않고 사용하는 방법 (Class fields syntext 사용)
+            //handleclick = () => {
+            //    console.log('this is:', this);
+            //}
+
+            render() {
+                return (
+                    // 바인딩, Class fileds syntext를 둘다 사용하고 싶지 않은 경우
+                    // Arrow function 사용
+                    // 다위 필드에서 이게 실행되면 성능 문제가 생길 수 있기 때문에 권장하지 않음
+                    //<button onClock={() => this.handleClick()}> 
+
+
+                    <button onClick={this.handleClick}>
+                        {this.stat.isToggleOn ? '켜짐' : '꺼짐'}
+                    </button>
+                );
+            }
+        }
+
+    - ex) 함수 컴포넌트에서의 방법
+        function Toggle(props) {
+            const [isToggleOn, setIsToggleOn] = useState(true);
+            
+            // 방법 1. 함수 안에 함수로 정의
+            function handleClick() {
+                setIsToggleOn((isToggleOn) => !isToggleOn);
+            }
+
+            // 방법 2. arrow function을 사용하여 정의
+            const handleClick = () => {
+                setIsToggleOn((isToggleOn) => !isToggleOn);
+            }
+
+            return (
+                <button onClick={this.handleClick}>
+                    {this.stat.isToggleOn ? '켜짐' : '꺼짐'}
+                </button>
+            );
+        }
+    
+- Arguments 전달 바법
+    Argument(주장, 논쟁, 말다툼) : 함수에 전달할 데이터
+
+    - ex) 클래스 컴포넌트에서 사용하는 방식
+        <button onClick={(even) => this.deleteItem(id, event)}>삭제하기</button>
+
+        <button onClick={this.deleteItem.bind(this, id)}>삭제하기</button>
+
+    -ex) 함수 컴포넌트에서 사용하는 방식
+        function MyButton(props) {
+            const handleDelete = (id, event) => {
+                console.log(id, event.target);
+            };
+
+            return (
+                <button onClick={(even) => handleDelete(1, event)}>
+                    삭제하기
+                </button>
+            );
+        }

@@ -8,6 +8,9 @@ import Clock from './chapter_04/Clock';
 import CommentList from './chapter_05/CommentList';
 import NotificationList from './chapter_06/NotificationList';
 import Accommodate from './chapter_07/Accommodate';
+import ConfirmButtonBind from './chapter_08/ConfirmButtonBind';
+import ConfirmButtonClassFieldsSyntax from './chapter_08/ConfirmButtonClassFieldsSyntax';
+import ConfirmButtonFunction from './chapter_08/ConfirmButtonFunction';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // [ chapter_03 ]
@@ -42,9 +45,23 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // );
 
 // [ chapter_07 ]
+// root.render(
+//   <React.StrictMode>
+//     <Accommodate />
+//   </React.StrictMode>
+// );
+
+// [ chapter_08 ]
 root.render(
   <React.StrictMode>
-    <Accommodate />
+    바인드 방법
+    <ConfirmButtonBind /> 
+    <hr />
+    Class field syntax 방법
+    <ConfirmButtonClassFieldsSyntax />
+    <hr /> 
+    함수 컴포넌트 방법
+    <ConfirmButtonFunction /> 
   </React.StrictMode>
 );
 
