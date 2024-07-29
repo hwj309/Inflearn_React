@@ -14,6 +14,7 @@ import ConfirmButtonFunction from './chapter_08/ConfirmButtonFunction';
 import LandingPage from './chapter_09/LandingPage';
 import AttendanceBook from './chapter_10/AttendanceBook';
 import SignUp from './chapter_11/SignUp';
+import Calculator from './chapter_12/Calculator';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // [ chapter_03 ]
@@ -83,9 +84,16 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // );
 
 // [ chapter_11 ]
+// root.render(
+//   <React.StrictMode>
+//     <SignUp /> 
+//   </React.StrictMode>
+// );
+
+// [ chapter_12 ]
 root.render(
   <React.StrictMode>
-    <SignUp /> 
+    <Calculator /> 
   </React.StrictMode>
 );
 
