@@ -36,9 +36,9 @@ function ProfileCard(props) {
     return (
         <div>
             {
-                infos.map((info) => {
+                infos.map((info, i) => {
                     return (
-                        <Card title={info.title} backgoundColor={info.backgroundColor}>
+                        <Card key={i} title={info.title} backgoundColor={info.backgroundColor}>
                             <p>안녕하세요. {info.title} 입니다.</p>
                             <p>적용한 색은 {info.backgoundColor} 입니다.</p>
                         </Card>
