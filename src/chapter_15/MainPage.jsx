@@ -12,7 +12,7 @@ const Title = styled.h1`
     text-align: center;
 `;
 
-function Test(props) {
+function MainPage(props) {
     return(
         <Wrapper>
             <Title>
@@ -22,4 +22,4 @@ function Test(props) {
     )
 }
 
-export default Test;
+export default MainPage;
