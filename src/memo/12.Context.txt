@@ -1,0 +1,128 @@
+[Context]
+
+- Context는 리엑트 컴포넌트들 사이에서 데이터를 기존의 props를 통해 전달하는 방식 데신
+  컴포넌트트리를 통해 곧바로 컨포넌트로 전달하는 새로운 방식을 제공한다.
+  이를 통해 어떤 컴포넌트든이 더 쉽게 접근 할 수 있다.
+
+- 이걸 사용하면 코드도 매우 깔끔해지고 데이터를 한곳에서 관리하기 때문에 디버깅 하기도 유리함!!!!!
+
+- Context는 언제 사용할까?
+    - 여러 개의 Component들이 접근해야 하는 데이터
+        - 로그인 여부, 로그인 정보, UI 테마, 현제 언어 등 ...
+
+    - ex)
+        // 컨텍스트는 데이터를 매번 컴포넌트를 통해 전할 할 필요 없이 컴포넌트 트리로 곧바로 전달하게 해준다.
+        // 여기에서는 현재 테마를 위한 컨텍스트를 생성하며, 기본값은 'light' 이다.
+        const ThemeContext = React.createContext('light');
+
+        // Provider를 사용하여 하위 컴포넌트들에게 현재 테마 데이터를 전달한다.
+        // 모든 하위 컴포넌트들은 컨포넌트 트리 하단에 얼마나 깊이 있는지에 관계없이 데이터를 읽을 수 있다.
+        // 여기서는 현재 테마값으로 'dark'를 전달하고 있다.
+        function App(props) {
+            return (
+                <ThemeContext.Provider value="dark">
+                    <Tollbar />
+                </ThemeContext.Provider>
+            );
+        }
+
+        // 이제 중간에 위치한 컨포넌트는 테마 데이터를 하위 컴포넌트로 전달할 필요가 없다.
+        function Toobar(props) {
+            return (
+                <div>
+                    <ThemeButton />
+                </div>
+            );
+        }
+
+        function ThemeButton(props) {
+            // 리액트는 가장 가까운 상위 테마 Provider를 찾아서 해당되는 값을 사용한다.
+            // 만약 해당되는 Provider가 없을 경우 기본값(여기에서는 'light')을 사용한다.
+            // 여기에서는 상위 Provider가 있기 때문에 현재 테마의 값은 'dark'가 된다.
+            return (
+                <ThemeContext.Consumer>
+                    {value => <Button theme={value} />}
+                </ThemeContext.Consumer>
+            );
+        }
+
+- ★ Context를 사용할기 전에 고려할 점 ★
+    - Context는 다른 레벨의 많은 컴포넌트가 특정 데이터를 필요로 하는 경우에 주로 사용한다.
+      하지만 무조건 Constext를 사용하는 것이 좋은 것은 아니다.
+      왜냐하며 컴포넌트와 컨텍트스가 연동되면 재사용성이 떨어지기 때문이다.
+      그래서 다른 레벨에 많은 컨포넌트가 데이터를 필요로 하는경우가 아니라면 기존에 사용하던 방식대로
+      props를 통해 데이터를 전달하는 컴포넌트 Compositon방버빙 더 적합하다.
+
+- Context API
+    - React.createContext()
+        : Context 생성
+
+        ex)
+            const MyContext = React.createContext(기본값);
+
+        ※ 기본값으로 undefined 를 사용하면 기본값을 사용하지 않음.
+
+
+    - Context.Provider
+        : 하위 컴포넌트들을 감싸주면 모든 하위 컴포넌트는 해당 Context의 데이터에 접근 할 수 있게된다.
+
+        ex)
+            <MyContext.Provider value={/* some value */}>
+
+        - Provider value에서 주의해야 할 사항
+            1. Provider 컴포넌트가 재렌더링될 때마다 모든 하위 consumer 컴포넌트가 재렌더링 됨.
+    
+    - Class.contextType
+        : 프로바이드 하위에있는 클래스 컴포넌트에서 컨텍스트의 데이터에 접그하기 위해 사용.
+    
+    - Context.Consumer
+        : 컨텍스트의 데이터를 구독하는 컴포넌트이다.
+           
+        ex) 
+            <MyContext.Consumer>
+                {value => /* 컨텍스트의 값에 따라서 컴포넌트들을 렌더링 */}
+            </MyContext.Consumer>
+    
+    - function as aa child
+        : 컨포넌트의 자식으로 함수를 사용하는 방법이다.
+           리액트에서는 기본적으로 하위 컴포넌트들을 children이라는 props로 전달해 주는데
+           children으로 컴포넌트 대신 함수를 사용한다.
+
+        ex)
+            // children이라는 prop을 직접 선언하는 방식
+            <Profile children={name => <p>이름: {name}</p>} />
+
+            // Profile컴포넌트로 감싸서 children으로 만드는 방식
+            <Profile>{name => <p>이름: {name}</p>}</Profile>
+
+    - Context.displayName
+        : 해당 컴포넌트의 이름을 지정
+
+        ex) 
+            const MyContext = React.createContext(/* some value */);
+            MyContext.displayName = 'MyDisplayName';
+
+            // 개발자 도구에 "MyDisplayName.Provider"로 표시됨
+            <MyContext.Provider>
+
+            // 개발자 도구에 "MyDisplayName.Consumer"로 표기됨
+            <MyContext.Consumer>
+
+- 여러 개의 Context 사용하기
+    : Context.Provider를 중첩해서 쓰는 방식으로 구현 가능.
+
+
+Hook을 사용해서 더욱 쉽세 사용할 수 있다~~
+위에 내용은 거의 쓸일이 없다 ㅠㅠ
+
+- useContext()
+    - ex) useContext() Hokk을 사용한 예시
+        function MyComponent(props) {
+            const value = useContext(MyContext);
+
+            return (
+                ...
+            );
+        }
+    
+    ※ ★useContext() Hook을 사용할 경우에는 파라미터로 컨텍스느 객체를 넣어줘야한다.★
